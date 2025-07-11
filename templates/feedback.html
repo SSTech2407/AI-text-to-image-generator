@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feedback</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #ddd;
+      font-family: "Segoe UI", sans-serif;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #ec008c;
+      margin-bottom: 10px;
+    }
+
+    .icon {
+      width: 60px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #2c2c2c;
+      border: 1px solid #555;
+      color: #eee;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: linear-gradient(90deg, #ec008c, #fc6767);
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #fc6767, #ec008c);
+    }
+
+     .back-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, #ec008c, #fc6767);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(90deg, #fc6767, #ec008c);
+    }
+  </style>
+</head>
+<body>
+  <img class="icon" src="https://cdn-icons-png.flaticon.com/512/1827/1827301.png" alt="Feedback Icon" />
+  <h1>We’d love your feedback!</h1>
+
+  <p>
+    Got an idea? Found a bug? Want a new feature? Let us know below!
+  </p>
+
+  <form action="#" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Feedback</button>
+  </form>
+
+  <a href="/" class="back-button">← Back to Home</a>
+</body>
+</html>

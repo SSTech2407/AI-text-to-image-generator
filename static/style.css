@@ -1,0 +1,199 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #1e1e1e;
+  color: #ddd;
+  line-height: 1.6;
+  font-size: 16px;
+  animation: fadeInBody 1.5s ease-in-out;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ec008c, #fc6767);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  animation: slideInDown 1s ease;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0,0,0,0.6)), url('image.jpg') center/cover no-repeat fixed;
+  z-index: -1;
+  animation: fadeInBg 2s ease-in-out;
+}
+
+/* Custom font styles for emphasis */
+.italic {
+  font-style: italic;
+}
+
+/* Input focus with bright pink border */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ec008c90;
+  border-color: #ec008c;
+}
+
+/* Pink gradient button */
+.btn-pink {
+  background: linear-gradient(90deg, #ec008c, #fc6767);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-pink:hover {
+  background: linear-gradient(90deg, #fc6767, #ec008c);
+  transform: scale(1.05);
+}
+
+/* Slight transparent overlay behind the container */
+.overlay {
+  background: #252526cc;
+  border-radius: 10px;
+  animation: fadeInOverlay 1.2s ease-in;
+}
+
+/* Footer styling */
+footer a {
+  color: #cec2c2;
+  text-decoration: none;
+  margin-right: 12px;
+  font-size: 0.99rem;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #ec008c;
+}
+
+/* Responsive grid for images with spacing */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  max-width: 600px;
+  opacity: 0;
+  animation: slideFadeIn 1.4s ease-in-out forwards;
+}
+
+.image-grid img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 0 8px rgb(236 0 140 / 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  background: #333;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideImageIn 0.6s ease forwards;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 14px #ec008c;
+}
+
+/* Logo area */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #a1a1a1;
+  user-select: none;
+  margin-bottom: 14px;
+  animation: fadeInLeft 1s ease;
+}
+
+.logo-icon {
+  width: 20px;
+  height: 20px;
+  background: #d4d4d4;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1e1e1e;
+  font-weight: 700;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.footer {
+  margin-top: 50px;
+  padding: 0px;
+  color: #fff;
+  font-size: 24px;
+  font-style: italic;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  animation: fadeInFooter 2s ease;
+}
+
+@keyframes fadeInBody {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInFooter {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInGrid {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomFade {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideImageIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

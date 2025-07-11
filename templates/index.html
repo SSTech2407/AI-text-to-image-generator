@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Image Creator</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-12 select-none">
+    <div class="background"></div>
+
+  <div class="w-full max-w-5xl overlay p-8">
+    <!-- Logo area -->
+    <div class="logo-area mb-6">
+      <h1 class="app-title">AI text to Image Generator</h1>
+    
+      
+    <span class="ml-4 px-2 py-0.5 border border-gray-600 rounded text-xs uppercase tracking-wider select-text" title="Image Creator powered by Hugging Face " style="user-select: text;">Image Creator <span style="opacity:0.7;font-weight:600;">powered by Clipdrop</span></span>
+    </div>
+    <!-- Main content area -->
+    <h2 class="text-white text-2xl md:text-3xl font-semibold mb-6">
+      Create stunning images from your imagination. 
+
+    <main class="flex flex-col md:flex-row md:gap-16 items-center justify-between">
+      <!-- Left content block -->
+      <div class="flex-1 max-w-md mb-10 md:mb-0">
+        <h1 class="text-white text-4xl md:text-5xl font-semibold leading-tight max-w-[14ch] mb-6">
+          Create <span class="italic">images</span> from<br />words with AI.
+        </h1>
+
+       <form id="createForm" method="POST" action="/generate" class="flex flex-col gap-4">
+  <input 
+    type="text" 
+    id="promptInput" 
+    name="prompt" 
+    placeholder="Describe what you'd like to create" 
+    aria-label="Describe what you'd like to create" 
+    required 
+    class="rounded-md px-4 py-3 text-gray-900 text-base placeholder-gray-600"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <button 
+    type="submit" 
+    class="btn-pink rounded-md py-3 text-white font-semibold text-lg shadow-md focus:outline-none focus:ring-4 focus:ring-pink-500 transition"
+  >
+    Create
+  </button>
+</form>
+
+
+        <p class="text-xs leading-tight text-gray-400 mt-4 max-w-[22rem] select-text" style="user-select: text;">
+          <span class="font-bold text-pink-400">How does it work?</span>
+           Built with machine learning and deep vision models, this tool creates images from natural language prompts using Stable Diffusion.
+        </p>
+
+        <p class="text-xs text-gray-400 mt-2 max-w-[22rem] underline cursor-pointer select-text" style="user-select: text;">
+          <a href="https://aka.ms/ImageCreatorTerms" target="_blank" rel="noopener noreferrer" class="hover:text-pink-400">Image Creator generates AI images based on your text. Learn more.</a>
+        </p>
+      </div>
+
+      <!-- Right-side images -->
+      <div class="image-grid flex-1 max-w-xl">
+        <img 
+          src="{{ url_for('static', filename='image1.png') }}" 
+          alt="Intricately carved warm toned wooden statue of a fierce tiger, artfully sculpted with detailed fur and stripes" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+        <img 
+        <img 
+          src="{{ url_for('static', filename='image2.jpg') }}" 
+          alt="Intricately carved warm toned wooden statue of a fierce tiger, artfully sculpted with detailed fur and stripes" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+        <img 
+          src="{{ url_for('static', filename='image3.png') }}" 
+          alt="Friendly panda bear dressed as a chef cooking with steam rising from a pot in a bright modern kitchen surrounded by fresh ingredients" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+        <img 
+          src="{{ url_for('static', filename='image4.png') }}" 
+          alt="Close-up of a vintage CRT computer screen glowing with green text on a pink-purple retro background highlighting nostalgic computing tech" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+        <img 
+          src="{{ url_for('static', filename='image5.png') }}" 
+          alt="Cozy wooden cabin covered with snow illuminated warmly at night amidst a dark blue snow-covered forest evoking calm winter solitude" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+        <img 
+          src="{{ url_for('static', filename='image6.jpg') }}" 
+          alt="Cozy wooden cabin covered with snow illuminated warmly at night amidst a dark blue snow-covered forest evoking calm winter solitude" 
+          loading="lazy" 
+          onerror="this.style.display='none'" 
+          draggable="false"
+        />
+      </div>
+    </main>
+  </div>
+
+ <footer class="w-full max-w-5xl flex justify-center gap-6 mt-12 mb-4 text-gray-500 select-none">
+  <a href="{{ url_for('privacy') }}" tabindex="-1">Privacy and Cookies</a>
+  <a href="{{ url_for('content') }}" tabindex="-1">Content Policy</a>
+  <a href="{{ url_for('term') }}" tabindex="-1">Terms of Use</a>
+  <a href="{{ url_for('feedback') }}" tabindex="-1">Feedback</a>
+</footer>
+<div id="generatedImage" class="flex justify-center items-center mt-6"></div>
+
+
+
+ <script>
+  const form = document.getElementById('createForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const input = document.getElementById('promptInput');
+    const prompt = input.value.trim();
+    if (!prompt) return;
+
+    // Clear previous result
+    document.querySelectorAll("div.text-center.mt-6").forEach(el => el.remove());
+
+    // Show loading spinner
+    const loader = document.createElement("div");
+    loader.id = "loadingSpinner";
+    loader.innerHTML = `
+      <div class="text-center mt-6">
+        <div class="inline-block w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-white mt-2">Generating image...</p>
+      </div>
+    `;
+    document.body.appendChild(loader);
+
+    try {
+      const response = await fetch("/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await response.json();
+
+      // Remove loading spinner
+      loader.remove();
+
+      if (data.image) {
+        const img = document.createElement("img");
+        img.src = data.image;
+        img.alt = "Generated Image";
+        img.className = "mt-4 rounded-md shadow-lg";
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = data.image;
+        downloadLink.download = "generated_image.png";
+        downloadLink.innerText = "⬇️ Download Image";
+        downloadLink.className = "block mt-2 text-center text-white bg-pink-600 px-4 py-2 rounded-md shadow hover:bg-pink-700 transition duration-300";
+
+        const container = document.createElement("div");
+        container.className = "text-center mt-6";
+        container.appendChild(img);
+        container.appendChild(downloadLink);
+
+        document.body.appendChild(container);
+      } else {
+        alert("Error: " + (data.error || "Something went wrong."));
+      }
+
+    } catch (err) {
+      console.error(err);
+      loader.remove();  // Remove loader even on error
+      alert("Failed to generate image.");
+    }
+
+    input.value = '';
+  });
+</script>
+  <div class="footer">
+    Developed by Sparsh Sharma
+  </div>
+</body>
+</html>
