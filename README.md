@@ -74,18 +74,18 @@ The user provides a **creative text prompt**, which is sent to the **Clipdrop AP
  - Model: Stable Diffusion
  - API Key: Required (free tier available)
  - Endpoint: https://clipdrop-api.co/text-to-image/v1
-
+---
 📸 Example Output
 Prompt: "Futuristic cyberpunk city at night with glowing lights and flying cars"
-→ Generated Image:
-
+→ Generated Image:<img width="1024" height="1024" alt="generated_image (2)" src="https://github.com/user-attachments/assets/751b95ed-6fb2-48c2-a770-5f8547f8bb92" />
+---
 🌍 Live Demo
-🔗 Click here to try the app
-
+🔗 [Click here to try the app](https://ai-text-to-image-generator-fn2z.onrender.com/)
+---
 🧑‍💻 Author
 Developed by Sparsh Sharma
 GitHub: SSTech2407
-
+---
 📅 Final Release
 This is the final version of the project completed on 9 July 2025, with full Clipdrop integration, responsive UI, animations, and deployment-ready structure.
 
