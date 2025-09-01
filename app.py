@@ -4,6 +4,7 @@ import requests
 import base64
 import os
 from dotenv import load_dotenv
+import smtplib
 
 # Load API key from .env
 load_dotenv()
@@ -62,8 +63,29 @@ def content():
 def term():
     return render_template("term.html")
 
-@app.route("/feedback")
+@app.route("/feedback", methods=["GET", "POST"])
 def feedback():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        # SMTP email sending
+        # Load from .env
+        sender_email = os.getenv("APP_EMAIL")
+        app_password = os.getenv("APP_PASSWORD")
+        receiver_email = sender_email  # or another email you want to receive feedback
+
+        email_message = f"Subject: Feedback from {name}\n\nName: {name}\nEmail: {email}\nMessage: {message}"
+
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(sender_email, app_password)
+                server.sendmail(sender_email, receiver_email, email_message)
+            return "Feedback sent successfully!"
+        except Exception as e:
+            return f"Error sending feedback: {str(e)}"
+
     return render_template("feedback.html")
 
 if __name__ == "__main__":
